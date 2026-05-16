@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Приключение для двоих</title>
+    <title>Интерактивный гайд-игра</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #ffe3ec, #ffb3c6);
-            color: #4a0e17;
+            background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+            color: #0f172a;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -22,31 +22,31 @@
             background: white;
             padding: 30px;
             border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(255, 75, 110, 0.2);
-            max-width: 500px;
+            box-shadow: 0 10px 25px rgba(14, 165, 233, 0.15);
+            max-width: 550px;
             width: 100%;
             text-align: center;
         }
-        h1 { font-size: 24px; margin-bottom: 10px; color: #ff4b6e; }
-        .description { font-size: 14px; color: #885560; margin-bottom: 20px; }
+        h1 { font-size: 24px; margin-bottom: 10px; color: #0284c7; }
+        .description { font-size: 14px; color: #64748b; margin-bottom: 20px; }
         
         /* Шкала */
         .progress-container {
-            background-color: #f0f0f0;
+            background-color: #f1f5f9;
             border-radius: 15px;
             height: 30px;
             width: 100%;
             margin-bottom: 10px;
             overflow: hidden;
-            border: 2px solid #ffb3c6;
+            border: 2px solid #93c5fd;
         }
         .progress-bar {
             height: 100%;
             width: 20%; /* Старт с 20% */
-            background: linear-gradient(90deg, #ff758f, #ff4b6e);
+            background: linear-gradient(90deg, #38bdf8, #0284c7);
             transition: width 0.4s ease;
         }
-        .status-text { font-weight: bold; margin-bottom: 20px; font-size: 18px; }
+        .status-text { font-weight: bold; margin-bottom: 20px; font-size: 18px; color: #1e293b; }
 
         /* Кнопки */
         .buttons-grid {
@@ -56,19 +56,20 @@
             margin-bottom: 20px;
         }
         button {
-            background-color: #fff0f3;
-            border: 2px solid #ffb3c6;
+            background-color: #f0f9ff;
+            border: 2px solid #bae6fd;
             padding: 12px;
             border-radius: 12px;
             cursor: pointer;
             font-weight: 600;
-            color: #a32b40;
+            color: #0369a1;
             transition: all 0.2s;
             font-size: 14px;
         }
         button:hover {
-            background-color: #ffb3c6;
+            background-color: #0284c7;
             color: white;
+            border-color: #0284c7;
             transform: translateY(-2px);
         }
         button:active { transform: translateY(0); }
@@ -77,34 +78,34 @@
         #log {
             font-style: italic;
             min-height: 40px;
-            color: #631c28;
+            color: #334155;
             margin-top: 15px;
             padding: 10px;
-            background-color: #fff9fa;
+            background-color: #f8fafc;
             border-radius: 8px;
+            border-left: 4px solid #38bdf8;
         }
 
         /* Экран финала */
         .hidden { display: none; }
-        .win-screen { color: #d90429; font-size: 20px; font-weight: bold; }
-        .lose-screen { color: #5c677d; font-size: 20px; font-weight: bold; }
-        .restart-btn { background: #ff4b6e; color: white; border: none; margin-top: 15px; width: 100%; }
-        .restart-btn:hover { background: #d90429; }
+        .win-screen { color: #0369a1; font-size: 20px; font-weight: bold; }
+        .lose-screen { color: #475569; font-size: 20px; font-weight: bold; }
+        .restart-btn { background: #0284c7; color: white; border: none; margin-top: 15px; width: 100%; }
+        .restart-btn:hover { background: #0369a1; }
     </style>
 </head>
 <body>
 
 <div class="game-container">
-    <!-- Игровой экран -->
     <div id="game-inside">
-        <h1>Инструкция: Как порадовать Надю 💋</h1>
+        <h1>Инструкция: Как порадовать Надю</h1>
         <p class="description">Доведи шкалу удовольствия до 100%, выбирая правильные действия. Избегай того, что ей не нравится!</p>
         
         <div class="progress-container">
             <div id="progress" class="progress-bar"></div>
         </div>
-        <div class="status-text">Возбуждение: <span id="pleasure-val">20</span>%</div>
-        <div id="patience-text" style="color: #c9184a; font-size: 13px; margin-bottom: 15px;">Ошибок осталось: 3</div>
+        <div class="status-text">Уровень удовольствия: <span id="pleasure-val">20</span>%</div>
+        <div id="patience-text" style="color: #b91c1c; font-size: 13px; margin-bottom: 15px;">Ошибок осталось: 3</div>
 
         <div class="buttons-grid">
             <button onclick="play('kiss')">Покусывания</button>
@@ -113,28 +114,28 @@
             <button onclick="play('cuni')">Куннилингус</button>
             <button onclick="play('finger')">Нежный фингеринг</button>
             <button onclick="play('back')">Низ поясницы 🔥</button>
-            <button onclick="play('pose_good')">Любимая поза</button>
+            <button onclick="play('missionary')">Миссионерская поза</button>
+            <button onclick="play('doggy')">Поза догги-стайл</button>
+            <button onclick="play('experiments')">Обсуждение экспериментов</button>
             <button onclick="play('pose_bad')">Обратная наездница</button>
             <button onclick="play('lotos')">Поза лотоса</button>
             <button onclick="play('slap_face')">Пощечина</button>
-            <button onclick="play('anal')">Анальные ласки</button>
-            <button onclick="play('hard')">Грубый секс</button>
+            <button onclick="play('anal')">Анальный секс</button>
+            <button onclick="play('hard')">Слишком жесткое</button>
         </div>
 
-        <div id="log">Прикоснись к ней...</div>
+        <div id="log">Начни ласки...</div>
     </div>
 
-    <!-- Экран победы -->
     <div id="win-screen" class="hidden win-screen">
-        <h2>🎉 О да-а-а! 💥</h2>
-        <p>Ты идеально чувствуешь Надю. Шкала заполнена, цель достигнута, Надя счастлива и полностью удовлетворена! ❤️</p>
-        <button class="restart-btn" onclick="resetGame()">Сыграть еще раз</button>
+        <h2>🎉 Цель достигнута!</h2>
+        <p>Ты отлично изучил предпочтения Нади. Шкала заполнена, Надя счастлива и полностью удовлетворена! ✨</p>
+        <button class="restart-btn" onclick="resetGame()">Начать заново</button>
     </div>
 
-    <!-- Экран проигрыша -->
     <div id="lose-screen" class="hidden lose-screen">
-        <h2>Ой-ой... 🛑</h2>
-        <p id="lose-reason">Наде это совсем не понравилось. Атмосфера испорчена, попробуй изучить её желания получше!</p>
+        <h2>Внимание... 🛑</h2>
+        <p id="lose-reason">Наде это не нравится. Атмосфера испорчена, попробуй изучить её желания получше!</p>
         <button class="restart-btn" onclick="resetGame()">Попробовать снова</button>
     </div>
 </div>
@@ -145,42 +146,40 @@
 
     const actions = {
         // Хорошие действия
-        'kiss': { score: 10, msg: "М-м-м, эти покусывания заводят... (+10%)" },
+        'kiss': { score: 10, msg: "Покусывания заводят... (+10%)" },
         'stroke': { score: 10, msg: "Нежные поглаживания — то что нужно. (+10%)" },
         'slap': { score: 15, msg: "Шлепок по попе! Игриво и горячо. (+15%)" },
-        'cuni': { score: 20, msg: "Куннилингус... Надя тихонько стонет. (+20%)" },
+        'cuni': { score: 20, msg: "Куннилингус приносит массу удовольствия! (+20%)" },
         'finger': { score: 15, msg: "Нежный фингеринг, аккуратно и чувственно. (+15%)" },
-        'back': { score: 30, msg: "О ДА! Поцелуи и ласки низа поясницы — её самая чувствительная зона! (+30%)" },
-        'pose_good': { score: 15, msg: "Отличный выбор позы, обоим очень удобно! (+15%)" },
+        'back': { score: 35, msg: "О да! Низ поясницы — её самая чувствительная зона! (+35%)" },
+        'missionary': { score: 15, msg: "Миссионерская поза — классика и максимальная близость. (+15%)" },
+        'doggy': { score: 20, msg: "Догги-стайл — отличный глубокий коннект. (+20%)" },
+        'experiments': { score: 15, msg: "Открытость к обсуждению экспериментов сближает и заводит! (+15%)" },
         
         // Плохие действия
-        'pose_bad': { score: -20, bad: true, msg: "Обратная наездница? Нет, Наде неудобно и не нравится. (-20%)" },
-        'lotos': { score: -20, bad: true, msg: "Поза лотоса вообще не заходит. (-20%)" },
-        'slap_face': { score: -30, bad: true, msg: "Пощечина?! Нет, это слишком жестко и неприятно! (-30%)" },
-        'anal': { score: -40, bad: true, msg: "Всё, что связано с анальной зоной — строгое табу! (-40%)" },
-        'hard': { score: -25, bad: true, msg: "Слишком жестко! Надя любит нежность и правильный темп. (-25%)" }
+        'pose_bad': { score: -20, bad: true, msg: "Обратная наездница? Нет, Наде это неудобно. (-20%)" },
+        'lotos': { score: -20, bad: true, msg: "Поза лотоса вообще не подходит. (-20%)" },
+        'slap_face': { score: -30, bad: true, msg: "Пощечина?! Нет, это недопустимо и больно! (-30%)" },
+        'anal': { score: -40, bad: true, msg: "Анальный секс и всё, что связано с этой зоной — табу. (-40%)" },
+        'hard': { score: -25, bad: true, msg: "Слишком жестко! Надя предпочитает мягкость и нежность. (-25%)" }
     };
 
     function play(actionKey) {
         const action = actions[actionKey];
         pleasure += action.score;
         
-        // Ограничиваем шкалу от 0 до 100
         if (pleasure > 100) pleasure = 100;
         if (pleasure < 0) pleasure = 0;
 
-        // Проверка ошибок
         if (action.bad) {
             mistakes--;
         }
 
-        // Обновление интерфейса
         document.getElementById('progress').style.width = pleasure + '%';
         document.getElementById('pleasure-val').innerText = pleasure;
         document.getElementById('patience-text').innerText = `Ошибок осталось: ${mistakes}`;
         document.getElementById('log').innerText = action.msg;
 
-        // Проверка условий конца игры
         if (pleasure >= 100) {
             endGame('win');
         } else if (pleasure <= 0 || mistakes <= 0) {
@@ -194,9 +193,9 @@
             document.getElementById('win-screen').classList.remove('hidden');
         } else {
             if (mistakes <= 0) {
-                document.getElementById('lose-reason').innerText = "Ты совершил слишком много ошибок и делал то, что Наде неприятно. Игра окончена.";
+                document.getElementById('lose-reason').innerText = "Ты совершил слишком много ошибок и выбирал то, что Наде неприятно. Игра окончена.";
             } else {
-                document.getElementById('lose-reason').innerText = "Уровень возбуждения упал до нуля. Нужно быть внимательнее к партнерше!";
+                document.getElementById('lose-reason').innerText = "Уровень удовольствия упал до нуля. Будь внимательнее к желаниям партнерши!";
             }
             document.getElementById('lose-screen').classList.remove('hidden');
         }
@@ -208,7 +207,7 @@
         document.getElementById('progress').style.width = pleasure + '%';
         document.getElementById('pleasure-val').innerText = pleasure;
         document.getElementById('patience-text').innerText = `Ошибок осталось: ${mistakes}`;
-        document.getElementById('log').innerText = "Прикоснись к ней...";
+        document.getElementById('log').innerText = "Начни ласки...";
         
         document.getElementById('game-inside').classList.remove('hidden');
         document.getElementById('win-screen').classList.add('hidden');
